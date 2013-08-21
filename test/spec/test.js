@@ -1,5 +1,6 @@
-/*global describe, it */
-'use strict';
+/*global describe, it , require*/
+/*jshint globalstrict: true*/
+"use strict";
 
 var should = require('chai').should(),
     app = require('../../app.js'),

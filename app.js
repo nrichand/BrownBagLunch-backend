@@ -1,7 +1,6 @@
-
-/**
- * Module dependencies.
- */
+/*jshint node: true*/
+/*jshint globalstrict: true*/
+"use strict";
 
 var express = require('express'),
     routes = require('./routes'),
