@@ -1,4 +1,3 @@
-/*jshint node: true*/
 /*jshint globalstrict: true*/
 "use strict";
 
@@ -16,7 +15,10 @@ module.exports = function (grunt) {
             }
         },
         jshint: {
-            all: ['Gruntfile.js', 'app.js', 'test/**/*.js', 'routes/**/*.js']
+            all: ['Gruntfile.js', 'app.js', 'test/**/*.js', 'routes/**/*.js'],
+            options: {
+                node: true
+            }
         }
     });
 
