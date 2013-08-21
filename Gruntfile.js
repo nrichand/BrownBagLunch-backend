@@ -12,11 +12,15 @@ module.exports = function (grunt) {
                 },
                 src: ['test/spec/**/*.js']
             }
+        },
+        jshint: {
+            all: ['Gruntfile.js', 'app.js', 'test/**/*.js', 'routes/**/*.js']
         }
     });
     grunt.loadNpmTasks('grunt-mocha-test');
+    grunt.loadNpmTasks('grunt-contrib-jshint');
 
-    grunt.registerTask('default', ['mochaTest']);
+    grunt.registerTask('default', ['mochaTest', 'jshint']);
     grunt.registerTask('test', ['mochaTest']);
 
 };
