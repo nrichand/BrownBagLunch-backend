@@ -17,8 +17,8 @@ module.exports = function (grunt) {
             all: ['Gruntfile.js', 'app.js', 'test/**/*.js', 'routes/**/*.js']
         }
     });
-    grunt.loadNpmTasks('grunt-mocha-test');
-    grunt.loadNpmTasks('grunt-contrib-jshint');
+
+    require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
 
     grunt.registerTask('default', ['mochaTest', 'jshint']);
     grunt.registerTask('test', ['mochaTest']);
