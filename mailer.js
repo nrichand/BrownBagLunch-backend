@@ -37,6 +37,8 @@ var Mail = function(from, to, subject, message){
 exports.Mail = Mail;
 
 exports.send = function send(mail){
+    console.log("Oups I did it again!");
+
     smtpTransport.sendMail(mail.getMailOptions(), function(error, response){
         if(error){
             console.log(error);

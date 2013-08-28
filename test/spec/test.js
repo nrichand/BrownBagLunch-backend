@@ -12,8 +12,10 @@ var should = require('chai').should(),
     mailer = require('../../mailer.js');
 
 (function () {
+    before(mockMongo);
+    before(mockMailSend);
+
     describe('should log bbl usage :', function () {
-        before(mockMongo);
 
         it('should return status 200', function (done) {
             http.get("http://localhost:3000/users/nrichand/hit",function (res) {
@@ -28,14 +30,12 @@ var should = require('chai').should(),
                 done();
             });
         });
-    }),
+    });
+
 
     describe('should mail baggers :', function () {
-        //before(mockMailSend());
 
         it('should call send mail', function (done) {
-            sinon.spy(mailer, "send");
-
             var post_data = "from=nrichand@brownbaglunch.fr&to=foo@bar.com&subject=BBL&message=Yeah";
 
             var options = {
@@ -43,20 +43,24 @@ var should = require('chai').should(),
                 port: 3000,
                 path: '/mail',
                 method: 'POST',
-
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
                     'Content-Length': post_data.length
                 }
             };
 
-            var req = http.request(options, function(res) {
-                console.log('STATUS: ' + res.statusCode);
-                console.log('HEADERS: ' + JSON.stringify(res.headers));
+            var req = http.request(options, function (res) {
                 res.setEncoding('utf8');
 
                 res.on('data', function (chunk) {
-                    console.log('BODY: ' + chunk);
+                    assert.calledOnce(mailer.send);
+
+                    assert.calledWith(mailer.send, sinon.match.has("from", "nrichand@brownbaglunch.fr"));
+                    assert.calledWith(mailer.send, sinon.match.has("to", "foo@bar.com"));
+                    assert.calledWith(mailer.send, sinon.match.has("subject", "BBL"));
+                    assert.calledWith(mailer.send, sinon.match.has("message", "Yeah"));
+
+                    done();
                 });
             });
 
@@ -67,20 +71,14 @@ var should = require('chai').should(),
             // write data to request body
             req.write(post_data);
             req.end();
-
-
-            var expectedMail = new mailer.Mail("nrichand@brownbaglunch.fr", "to=foo@bar.com", "BBL", "Yeah");
-
-            //assert.calledWith(mailer.send, expectedMail);
-            done();
         });
     });
 })();
 
 function mockMongo(){
-    sinon.spy(storage, "save");
+    sinon.stub(storage, "save");
 }
 
 function mockMailSend(){
-    sinon.spy(mailer, "send");
+    sinon.stub(mailer, "send");
 }
