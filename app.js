@@ -23,6 +23,7 @@ app.configure('development', function(){
 });
 
 app.get('/', routes.index);
+app.post('/mail', routes.mail);
 app.get('/users/:user/hit', routes.hit);
 
 http.createServer(app).listen(app.get('port'), function(){

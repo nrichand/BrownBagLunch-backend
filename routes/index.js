@@ -10,3 +10,8 @@ exports.hit = function (req, res) {
   res.send(200);
 };
 
+exports.mail =  function (req, res) {
+    console.log('find from : '+req.body.from);
+    res.send(200);
+};
+
