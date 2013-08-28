@@ -1,21 +1,24 @@
 {
-  "name": "bbl-backend",
-  "version": "0.0.1",
-  "private": true,
-  "scripts": {
-    "start": "node app"
-  },
-  "dependencies": {
-    "express": "~3.3.4",
-    "nodemailer": "~0.5.2",
-    "crypto": "0.0.3"
-  },
-  "devDependencies": {
-    "grunt": "~0.4.1",
-    "grunt-mocha-test": "~0.6.3",
-    "chai": "~1.7.2",
-    "grunt-contrib-jshint": "~0.6.3",
-    "matchdep": "~0.1.2",
-    "sinon": "~1.7.3"
-  }
+    "name": "bbl-backend",
+    "version": "0.0.1",
+    "private": true,
+    "scripts": {
+        "start": "node app"
+    },
+    "scripts": {
+        "test": "grunt --verbose"
+    },
+    "dependencies": {
+        "express": "~3.3.4",
+        "nodemailer": "~0.5.2",
+        "crypto": "0.0.3"
+    },
+    "devDependencies": {
+        "grunt": "~0.4.1",
+        "grunt-mocha-test": "~0.6.3",
+        "chai": "~1.7.2",
+        "grunt-contrib-jshint": "~0.6.3",
+        "matchdep": "~0.1.2",
+        "sinon": "~1.7.3"
+    }
 }
