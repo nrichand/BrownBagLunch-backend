@@ -8,7 +8,8 @@ var should = require('chai').should(),
     app = require('../../app.js'),
     http = require('http'),
     index = require('../../routes/index.js'),
-    storage = require('../../storage.js');
+    storage = require('../../storage.js'),
+    mailer = require('../../mailer.js');
 
 (function () {
     describe('should log bbl usage :', function () {
@@ -27,9 +28,15 @@ var should = require('chai').should(),
                 done();
             });
         });
+    }),
+
+    describe('should mail baggers :', function () {
+        //before(mockMailSend());
 
         it('should call send mail', function (done) {
-            var post_data = "from=toto";
+            sinon.spy(mailer, "send");
+
+            var post_data = "from=nrichand@brownbaglunch.fr&to=foo@bar.com&subject=BBL&message=Yeah";
 
             var options = {
                 hostname: 'localhost',
@@ -61,6 +68,10 @@ var should = require('chai').should(),
             req.write(post_data);
             req.end();
 
+
+            var expectedMail = new mailer.Mail("nrichand@brownbaglunch.fr", "to=foo@bar.com", "BBL", "Yeah");
+
+            //assert.calledWith(mailer.send, expectedMail);
             done();
         });
     });
@@ -68,4 +79,8 @@ var should = require('chai').should(),
 
 function mockMongo(){
     sinon.spy(storage, "save");
+}
+
+function mockMailSend(){
+    sinon.spy(mailer, "send");
 }

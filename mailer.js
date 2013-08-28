@@ -1,3 +1,5 @@
+//send(new Mail("nrichand@gmail.com", "nrichand@brownbaglunch.fr", "Prise de contact", "Coucou"));
+
 var nodemailer = require("nodemailer"),
     crypto = require("crypto");
 
@@ -10,9 +12,8 @@ var smtpTransport = nodemailer.createTransport("SMTP",{
     }
 });
 
-send(new Mail("nrichand@gmail.com", "n.richand@egencia.fr", "Prise de contact", "Coucou"));
 
-function Mail(from, to, subject, message){
+var Mail = function(from, to, subject, message){
     this.from = from;
     this.to = to;
     this.subject = subject;
@@ -33,8 +34,9 @@ function Mail(from, to, subject, message){
         return mailOptions;
     }
 }
+exports.Mail = Mail;
 
-function send(mail){
+exports.send = function send(mail){
     smtpTransport.sendMail(mail.getMailOptions(), function(error, response){
         if(error){
             console.log(error);
