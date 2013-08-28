@@ -46,7 +46,7 @@ var should = require('chai').should(),
             var req = http.request(options, function(res) {
                 console.log('STATUS: ' + res.statusCode);
                 console.log('HEADERS: ' + JSON.stringify(res.headers));
-                res.setEncoding('utf8')
+                res.setEncoding('utf8');
 
                 res.on('data', function (chunk) {
                     console.log('BODY: ' + chunk);
@@ -54,7 +54,7 @@ var should = require('chai').should(),
             });
 
             req.on('error', function(e) {
-                e.message.should.be.empty()
+                e.message.should.be.empty();
             });
 
             // write data to request body
