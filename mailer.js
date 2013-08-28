@@ -10,27 +10,42 @@ var smtpTransport = nodemailer.createTransport("SMTP",{
     }
 });
 
-// setup e-mail data with unicode symbols
-var mailOptions = {
-    from: "brownbaglunchfr@gmail.com", // sender address
-    to: "nrichand@gmail.com", // list of receivers
-    subject: "On mange ensemble!?", // Subject line
-    text: "BBL rocks!", // plaintext body
-    html: "<b>BBL rocks!</b>" // html body
+send(new Mail("nrichand@gmail.com", "n.richand@egencia.fr", "Prise de contact", "Coucou"));
+
+function Mail(from, to, subject, message){
+    this.from = from;
+    this.to = to;
+    this.subject = subject;
+    this.message = message;
+
+    this.getMailOptions = function(){
+        var mailOptions = {
+            from: "brownbaglunchfr@gmail.com",
+            replyTo: this.from,
+            cc: this.from,
+            to: this.to,
+            bcc: "brownbaglunchfr@gmail.com",
+            subject: this.subject,
+            text: this.message,
+            html: this.message
+        }
+
+        return mailOptions;
+    }
 }
 
-// send mail with defined transport object
-smtpTransport.sendMail(mailOptions, function(error, response){
-    if(error){
-        console.log(error);
-    }else{
-        console.log("Message sent: " + response.message);
-    }
+function send(mail){
+    smtpTransport.sendMail(mail.getMailOptions(), function(error, response){
+        if(error){
+            console.log(error);
+        }else{
+            console.log("Message sent: " + response.message);
+        }
 
-    // if you don't want to use this transport object anymore, uncomment following line
-    smtpTransport.close(); // shut down the connection pool, no more messages
-});
-
+        // if you don't want to use this transport object anymore, uncomment following line
+        smtpTransport.close(); // shut down the connection pool, no more messages
+    });
+}
 
 function unencryptPassword() {
     var encrypted_password = "3264e1f83f832ce69c3240b838c56b09";
