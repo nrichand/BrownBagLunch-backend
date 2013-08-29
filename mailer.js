@@ -1,5 +1,3 @@
-//send(new Mail("nrichand@gmail.com", "nrichand@brownbaglunch.fr", "Prise de contact", "Coucou"));
-
 var nodemailer = require("nodemailer"),
     crypto = require("crypto");
 
@@ -37,8 +35,6 @@ var Mail = function(from, to, subject, message){
 exports.Mail = Mail;
 
 exports.send = function send(mail){
-    console.log("Oups I did it again!");
-
     smtpTransport.sendMail(mail.getMailOptions(), function(error, response){
         if(error){
             console.log(error);

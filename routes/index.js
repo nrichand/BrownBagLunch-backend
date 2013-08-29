@@ -15,4 +15,3 @@ exports.mail = function (req, res) {
     mailer.send(email);
     res.send(200);
 };
-
