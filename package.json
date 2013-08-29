@@ -8,7 +8,8 @@
   "dependencies": {
     "express": "~3.3.4",
     "nodemailer": "~0.5.2",
-    "crypto": "0.0.3"
+    "crypto": "0.0.3",
+    "validator": "~1.5.0"
   },
   "devDependencies": {
     "grunt": "~0.4.1",

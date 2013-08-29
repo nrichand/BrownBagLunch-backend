@@ -17,8 +17,9 @@ module.exports = function (grunt) {
         jshint: {
             all: ['Gruntfile.js', 'app.js', 'test/**/*.js', 'routes/**/*.js'],
             options: {
-                node: true,
-                predef: ["describe", "it", "before"] //Mocha methods
+                node: true, //specific node rules
+                expr: true, //chai do weird things, function looks like parameter
+                predef: ["describe", "it", "before", "after", "beforeEach", "afterEach"] //Mocha methods
             }
         }
     });

@@ -20,14 +20,14 @@ var sinon = require('sinon'),
         before(mockMongo);
 
         it('should return status 200', function (done) {
-            http.get("http://localhost:3000/users/nrichand/hit",function (res) {
+            http.get("http://localhost:3000/users/nrichand/hit", function (res) {
                 res.statusCode.should.equal(200);
                 done();
             });
         });
 
         it('should store a new hit for nrichand', function (done) {
-            http.get("http://localhost:3000/users/nrichand/hit",function (res) {
+            http.get("http://localhost:3000/users/nrichand/hit", function (res) {
                 storage.save.should.have.been.calledWith('nrichand');
                 done();
             });
@@ -35,7 +35,8 @@ var sinon = require('sinon'),
     });
 
     describe('should mail baggers :', function () {
-        before(mockMailSend);
+        beforeEach(mockMailSend);
+        afterEach(restoreMailer);
 
         it('should call send mail', function (done) {
             //Given
@@ -45,7 +46,7 @@ var sinon = require('sinon'),
             sendPOSTMailRequest(post_data, success_callback, error_callback);
 
             //Then
-            function success_callback (chunk) {
+            function success_callback(chunk) {
                 mailer.send.should.have.been.calledWithMatch({from: "nrichand@brownbaglunch.fr",
                     to: "foo@bar.com",
                     subject: "BBL",
@@ -55,6 +56,45 @@ var sinon = require('sinon'),
 
             function error_callback(e) {
                 e.message.should.be.empty();
+                done();
+            }
+        });
+
+        it('Bad mail <from> should return an error', function (done) {
+            //Given
+            var post_data = "from=nrichand&to=foo@bar.com&subject=BBL&message=Yeah";
+
+            //When
+            sendPOSTMailRequest(post_data, success_callback, error_callback);
+
+            //Then
+            function success_callback(chunk) {
+                mailer.send.should.not.have.been.called;
+                done();
+            }
+
+            function error_callback(e) {
+                e.message.should.be.empty();
+                done();
+            }
+        });
+
+        it('Bad mail <to> should return an error', function (done) {
+            //Given
+            var post_data = "from=nrichand@gmail.com&to=foo&subject=BBL&message=Yeah";
+
+            //When
+            sendPOSTMailRequest(post_data, success_callback, error_callback);
+
+            //Then
+            function success_callback(chunk) {
+                mailer.send.should.not.have.been.called;
+                done();
+            }
+
+            function error_callback(e) {
+                e.message.should.be.empty();
+                done();
             }
         });
     });
@@ -64,12 +104,16 @@ var sinon = require('sinon'),
  *  Utilities methods
  */
 
-function mockMongo(){
+function mockMongo() {
     sinon.stub(storage, "save");
 }
 
-function mockMailSend(){
+function mockMailSend() {
     sinon.stub(mailer, "send");
+}
+
+function restoreMailer() {
+    mailer.send.restore();
 }
 
 function sendPOSTMailRequest(post_data, success_callback, error_callback) {
