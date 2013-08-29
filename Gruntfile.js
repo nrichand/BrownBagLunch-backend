@@ -17,7 +17,8 @@ module.exports = function (grunt) {
         jshint: {
             all: ['Gruntfile.js', 'app.js', 'test/**/*.js', 'routes/**/*.js'],
             options: {
-                node: true
+                node: true,
+                predef: ["describe", "it", "before"] //Mocha methods
             }
         }
     });
@@ -26,5 +27,4 @@ module.exports = function (grunt) {
 
     grunt.registerTask('default', ['mochaTest', 'jshint']);
     grunt.registerTask('test', ['mochaTest']);
-
 };

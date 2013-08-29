@@ -1,17 +1,20 @@
-/*global describe, it, before, require*/
 /*jshint globalstrict: true*/
 "use strict";
 
-var should = require('chai').should(),
-    assert = require('sinon').assert,
-    sinon = require('sinon'),
-    app = require('../../app.js'),
+var sinon = require('sinon'),
+    chai = require("chai"),
+    should = require('chai').should(),
+    sinonChai = require("sinon-chai"),
+
     http = require('http'),
+
+    app = require('../../app.js'),
     index = require('../../routes/index.js'),
     storage = require('../../storage.js'),
     mailer = require('../../mailer.js');
 
 (function () {
+    chai.use(sinonChai);
 
     describe('should log bbl usage :', function () {
         before(mockMongo);
@@ -25,7 +28,7 @@ var should = require('chai').should(),
 
         it('should store a new hit for nrichand', function (done) {
             http.get("http://localhost:3000/users/nrichand/hit",function (res) {
-                assert.calledWith(storage.save, 'nrichand');
+                storage.save.should.have.been.calledWith('nrichand');
                 done();
             });
         });
@@ -38,13 +41,10 @@ var should = require('chai').should(),
             var post_data = "from=nrichand@brownbaglunch.fr&to=foo@bar.com&subject=BBL&message=Yeah";
 
             var success_callback = function (chunk) {
-                assert.calledOnce(mailer.send);
-
-                assert.calledWith(mailer.send, sinon.match.has("from", "nrichand@brownbaglunch.fr"));
-                assert.calledWith(mailer.send, sinon.match.has("to", "foo@bar.com"));
-                assert.calledWith(mailer.send, sinon.match.has("subject", "BBL"));
-                assert.calledWith(mailer.send, sinon.match.has("message", "Yeah"));
-
+                mailer.send.should.have.been.calledWithMatch({from: "nrichand@brownbaglunch.fr",
+                                                                to: "foo@bar.com",
+                                                                subject: "BBL",
+                                                                message: "Yeah"});
                 done();
             };
 
