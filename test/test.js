@@ -8,10 +8,10 @@ var sinon = require('sinon'),
 
     http = require('http'),
 
-    app = require('../../app.js'),
-    index = require('../../routes/index.js'),
-    storage = require('../../storage.js'),
-    mailer = require('../../mailer.js');
+    app = require('../app.js'),
+    index = require('../routes/index.js'),
+    storage = require('../storage.js'),
+    mailer = require('../mailer.js');
 
 (function () {
     chai.use(sinonChai);
@@ -38,21 +38,24 @@ var sinon = require('sinon'),
         before(mockMailSend);
 
         it('should call send mail', function (done) {
+            //Given
             var post_data = "from=nrichand@brownbaglunch.fr&to=foo@bar.com&subject=BBL&message=Yeah";
 
-            var success_callback = function (chunk) {
-                mailer.send.should.have.been.calledWithMatch({from: "nrichand@brownbaglunch.fr",
-                                                                to: "foo@bar.com",
-                                                                subject: "BBL",
-                                                                message: "Yeah"});
-                done();
-            };
-
-            var error_callback = function (e) {
-                e.message.should.be.empty();
-            };
-
+            //When
             sendPOSTMailRequest(post_data, success_callback, error_callback);
+
+            //Then
+            function success_callback (chunk) {
+                mailer.send.should.have.been.calledWithMatch({from: "nrichand@brownbaglunch.fr",
+                    to: "foo@bar.com",
+                    subject: "BBL",
+                    message: "Yeah"});
+                done();
+            }
+
+            function error_callback(e) {
+                e.message.should.be.empty();
+            }
         });
     });
 })();
