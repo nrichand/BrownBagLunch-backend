@@ -22,6 +22,12 @@ app.configure('development', function(){
   app.use(express.errorHandler());
 });
 
+app.all('*', function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "content-Type,x-requested-with");
+    next();
+});
+
 app.get('/', routes.index);
 app.post('/mail', routes.mail);
 app.get('/users/:user/hit', routes.hit);

@@ -12,14 +12,13 @@ exports.hit = function (req, res) {
 };
 
 exports.mail = function (req, res) {
-
     try {
         check(req.body.from).isEmail();
         check(req.body.to).isEmail();
 
         var email = new mailer.Mail(req.body.from, req.body.to, req.body.subject, req.body.message);
         mailer.send(email);
-        res.send(200);
+        res.send(200, 'OK');
     } catch (e) {
         res.send(400, e.message);
     }
