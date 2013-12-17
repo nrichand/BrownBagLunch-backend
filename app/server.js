@@ -14,6 +14,7 @@ function create(options){
 		.get(route.listBagger)
 		.path(":id").use(route.loadBagger)
 			.put(route.updateBagger)
+			.get(route.getBagger)
 	;
 
 	var server = http.createServer(app.build());
