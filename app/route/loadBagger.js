@@ -2,8 +2,13 @@
 
 var Bagger = require('../model/').Bagger;
 var resterror = require('resterror');
+var utils = require('../model/utils');
 
 function loadSession (req, res, next) {
+	if (!utils.isObjectId(req)) {
+		return next(resterror.resourceNotFound());
+	}
+
 	Bagger.findById(req.params.id, function (err, bagger) {
 		if(err){
 			return next(err);
