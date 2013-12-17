@@ -12,7 +12,8 @@ function create(options){
 	app.getRouter()
 		.post(route.createBagger)
 		.get(route.listBagger)
-		.parent()
+		.path(":id").use(route.loadBagger)
+			.put(route.updateBagger)
 	;
 
 	var server = http.createServer(app.build());
