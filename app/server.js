@@ -11,6 +11,7 @@ function create(options){
 
 	app.getRouter()
 		.post(route.createBagger)
+		.get(route.listBagger)
 		.parent()
 	;
 

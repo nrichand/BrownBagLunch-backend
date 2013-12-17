@@ -16,8 +16,13 @@ function create(name, callback) {
 	Bagger.create(obj, callback);
 }
 
+function listAll(callback) {
+	Bagger.find({}, callback);
+}
+
 var dao = {
-	create : create
+	create : create,
+	listAll: listAll
 };
 
 module.exports = dao;
