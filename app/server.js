@@ -17,6 +17,23 @@ function create(options){
 			.get(route.getBagger)
 	;
 
+	// (FARV) Cors Header in trash mode
+	// This is trashy but already planned in the next Silence release
+	// Do not forget to remove after upgrading
+	function setCorsHeaders(res, next, err) {
+		res.setHeader('Access-Control-Allow-Origin', "*");
+		res.setHeader('Access-Control-Allow-Headers', ['Content-type'].join(", "));
+		res.setHeader('Access-Control-Allow-Methods', (res.allowedMethods || []).join(", "));
+		next(err);
+	}
+	app.after(function corsHeaders(err, req, res, next) {
+		setCorsHeaders(res, next, err);
+	});
+	app.after(function corsHeaders(req, res, next) {
+		setCorsHeaders(res, next, null);
+	});
+
+
 	var server = http.createServer(app.build());
 
 	var serverDb = db(options.db.url, options.db.options.server, models.all);
