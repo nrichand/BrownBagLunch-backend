@@ -5,7 +5,7 @@ var resterror = require('resterror');
 var utils = require('../model/utils');
 
 function loadSession (req, res, next) {
-	if (!utils.isObjectId(req)) {
+	if (!utils.isObjectId(req.params.id)) {
 		return next(resterror.resourceNotFound());
 	}
 
