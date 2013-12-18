@@ -7,7 +7,15 @@ var models = require("./model/");
 var db = require('./db');
 
 function create(options){
-	var app = silence();
+	
+	var app = silence({
+		logger : true,
+		cors : {
+			allowedOrigins : ['*'],
+			allowedHeaders : ['Content-Type'],
+			exposedHeaders : ['Content-Type']
+		}
+	});
 
 	app.getRouter()
 		.post(route.createBagger)
