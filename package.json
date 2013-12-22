@@ -2,6 +2,10 @@
   "name": "bbl-backend",
   "version": "0.0.1",
   "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/nrichand/BrownBagLunch-backend.git"
+  },
   "scripts": {
     "start": "node app/app.js"
   },
