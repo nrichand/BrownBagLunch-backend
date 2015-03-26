@@ -5,7 +5,7 @@ var nodemailer = require("nodemailer"),
 var smtpTransport = nodemailer.createTransport("SMTP",{
     service: "Gmail",
     auth: {
-        user: "brownbaglunchfr@gmail.com",
+        user: "brownbaglunch.backend@gmail.com",
         pass: unencryptPassword()
     }
 });
@@ -19,11 +19,11 @@ var Mail = function(from, to, subject, message){
 
     this.getMailOptions = function(){
         var mailOptions = {
-            from: "brownbaglunchfr@gmail.com",
+            from: "brownbaglunch.backend@gmail.com",
             replyTo: this.from,
             cc: this.from,
             to: this.to,
-            bcc: "brownbaglunchfr@gmail.com",
+            bcc: "brownbaglunch.backend@gmail.com",
             subject: this.subject,
             text: this.message,
             html: this.message
