@@ -20,14 +20,14 @@ var sinon = require('sinon'),
         before(mockMongo);
 
         it('should return status 200', function (done) {
-            http.get("http://localhost:3000/users/nrichand/hit", function (res) {
+            http.get("http://localhost:8080/users/nrichand/hit", function (res) {
                 res.statusCode.should.equal(200);
                 done();
             });
         });
 
         it('should store a new hit for nrichand', function (done) {
-            http.get("http://localhost:3000/users/nrichand/hit", function (res) {
+            http.get("http://localhost:8080/users/nrichand/hit", function (res) {
                 storage.save.should.have.been.calledWith('nrichand');
                 done();
             });
@@ -119,7 +119,7 @@ function restoreMailer() {
 function sendPOSTMailRequest(post_data, success_callback, error_callback) {
     var options = {
         hostname: 'localhost',
-        port: 3000,
+        port: 8080,
         path: '/mail',
         method: 'POST',
         headers: {

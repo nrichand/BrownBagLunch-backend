@@ -13,19 +13,19 @@ module.exports = function (grunt) {
                 },
                 src: ['test/*.js']
             }
-        },
-        jshint: {
-            all: ['Gruntfile.js', 'app.js', 'test/**/*.js', 'routes/**/*.js'],
-            options: {
-                node: true, //specific node rules
-                expr: true, //chai do weird things, function looks like parameter
-                predef: ["describe", "it", "before", "after", "beforeEach", "afterEach"] //Mocha methods
-            }
-        }
+        }//,
+        //jshint: {
+            //all: ['Gruntfile.js', 'app.js', 'test/**/*.js', 'routes/**/*.js'],
+            //options: {
+                //node: true, //specific node rules
+                //expr: true, //chai do weird things, function looks like parameter
+                //predef: ["describe", "it", "before", "after", "beforeEach", "afterEach"] //Mocha methods
+            //}
+        //}
     });
 
     require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
 
-    grunt.registerTask('default', ['mochaTest', 'jshint']);
+    grunt.registerTask('default', ['mochaTest']);
     grunt.registerTask('test', ['mochaTest']);
 };
